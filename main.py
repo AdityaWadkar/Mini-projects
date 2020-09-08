@@ -14,24 +14,22 @@ def sendmail(to,sub,msg):
     s.quit()
 if __name__ == "__main__":
 
-    # sendmail(GMAIL_ID,"subject","test message")
     df=pd.read_excel("birthday.xlsx")
-    # print(df)
     today=datetime.datetime.now().strftime("%d-%m")
     presentyear=datetime.datetime.now().strftime("%Y")
-    # print(type(today))
+ 
     writeind = []
     for index,item in df.iterrows():
-        # print(index,item["Birthday"]) 
+        
         bd=item["Birthday"].strftime("%d-%m")
-        # print(bd)
+       
         if (today == bd) and presentyear not in  str(item['Year']):
             sendmail(item["Email"],item["subject"],item["Dialogue"])
             writeind.append(index)
-    # print(writeind)
+  
     for i in writeind:
         yr = df.loc[i,'Year'] 
         df.loc[i,'Year'] = str(yr) + ", " + str(presentyear)
-        # print(df.loc[i, 'Year'])
-    # print(df)
+        
+    
     df.to_excel(r'birthday.xlsx',index = False)
